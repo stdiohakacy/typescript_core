@@ -2,9 +2,9 @@ import { Body, JsonController, Post } from 'routing-controllers';
 import { getRepository } from 'typeorm';
 import { CategoryEntity } from './../entity/CategoryEntity';
 
-@JsonController()
+@JsonController('/v1/categories')
 export class CategoryController {
-  @Post('/categories')
+  @Post('/')
   async create(@Body() category: any) {
     const categoryRepository = getRepository(CategoryEntity)
     const cate = new CategoryEntity();
