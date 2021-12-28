@@ -1,14 +1,15 @@
+import { DB_HOST, DB_NAME, DB_PORT, DB_TYPE, DB_USER, DB_PASS } from './Configuration';
 import * as path from 'path';
 import { ConnectionOptions } from 'typeorm';
 
 export default {
     name: 'default',
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    database: 'typescript-core',
-    username: 'postgres',
-    password: '123456',
+    type: DB_TYPE,
+    host: DB_HOST,
+    port: DB_PORT,
+    database: DB_NAME,
+    username: DB_USER,
+    password: DB_PASS,
     cache: {},
     synchronize: false,
     logging: true,
