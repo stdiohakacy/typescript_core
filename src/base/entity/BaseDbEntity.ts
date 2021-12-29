@@ -1,5 +1,5 @@
 import { CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm';
-import { IBaseEntity } from '../domain/IBaseEntity';
+import { IBaseEntity } from '../../domain/IBaseEntity';
 
 export abstract class BaseDbEntity<T extends IBaseEntity> {
     @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })

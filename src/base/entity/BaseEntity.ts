@@ -1,4 +1,4 @@
-import { IBaseEntity } from "./IBaseEntity";
+import { IBaseEntity } from "../../domain/IBaseEntity";
 
 export abstract class BaseEntity<TEntity extends IBaseEntity> implements IBaseEntity {
     constructor(protected readonly data = {} as TEntity) { }

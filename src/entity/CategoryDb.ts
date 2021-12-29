@@ -1,5 +1,5 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
-import { BaseDbEntity } from '../base/BaseDBEntity';
+import { BaseDbEntity } from '../base/entity/BaseDbEntity';
 import { Category } from '../domain/Category';
 import { ICategory } from '../domain/ICategory';
 

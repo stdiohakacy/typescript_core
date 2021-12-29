@@ -1,6 +1,6 @@
 import { LogicalError } from '../exceptions/LogicalError';
 import { MessageError } from '../exceptions/MessageError';
-import { BaseEntity } from './BaseEntity';
+import { BaseEntity } from '../base/entity/BaseEntity';
 import { ICategory } from './ICategory';
 
 export class Category extends BaseEntity<ICategory> implements ICategory {
