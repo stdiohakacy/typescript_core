@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { BaseRepository } from "../../base/repository/BaseRepository";
-import { Category } from "../../domain/Category";
+import { Category } from "../../domain/category/Category";
 import { CategoryDb } from "../../entity/CategoryDb";
 import { CATEGORY_SCHEMA } from "../../schema/CategorySchema";
 import { ICategoryRepository } from "../../base/repository/ICategoryRepository";

@@ -1,7 +1,7 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseDbEntity } from '../base/entity/BaseDbEntity';
-import { Category } from '../domain/Category';
-import { ICategory } from '../domain/ICategory';
+import { Category } from '../domain/category/Category';
+import { ICategory } from '../domain/category/ICategory';
 
 @Entity({name: "categories"})
 export class CategoryDb extends BaseDbEntity<Category> implements ICategory {

@@ -1,5 +1,6 @@
 import Container from 'typedi';
 import { ApiService } from './ApiService';
+import { ENABLE_API_SERVICE } from './configs/Configuration';
 import { IDbContext } from './database/IDbContext';
 import './SingletonRegister';
 
@@ -7,11 +8,8 @@ const dbContext = Container.get<IDbContext>('db.context');
 
 const startApplication = async (): Promise<void> => {
   await dbContext.createConnection();
-  new ApiService().setup()
-  // useExpressServer(app, {
-  //   controllers: [CategoryController],
-  // });
-  // app.listen(3000);
+  if(ENABLE_API_SERVICE)
+    new ApiService().setup()
 }
 
 startApplication()

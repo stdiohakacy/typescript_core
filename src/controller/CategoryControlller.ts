@@ -8,9 +8,6 @@ export class CategoryController {
     private readonly _createCategoryCommandHandler: CreateCategoryCommandHandler
   ) {}
 
-  // @Inject('category.repository')
-  // private readonly _categoryRepository: ICategoryRepository;
-
   @Post('/')
   async create(@Body() param: CreateCategoryCommand): Promise<string> {
     return await this._createCategoryCommandHandler.handle(param);
