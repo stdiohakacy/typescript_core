@@ -1,5 +1,5 @@
-import { ROLE_SCHEMA } from './../../schema/RoleSchema';
-import { FindRoleCommonFilter, FindRoleFilter, IRoleRepository } from './../../base/repository/IRoleRepository';
+import { ROLE_SCHEMA } from '../../schema/RoleSchema';
+import { FindRoleCommonFilter, FindRoleFilter, IRoleRepository } from '../../base/repository/IRoleRepository';
 import { BaseRepository } from "../../base/repository/BaseRepository";
 import { Role } from "../../domain/role/Role";
 import { RoleDb } from "../../entity/RoleDb";
