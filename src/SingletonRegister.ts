@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import './database/DbContext';
+import './database/DbRegister';
 import * as routingController from 'routing-controllers';
 import * as typeorm from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';
-import './database/DbContext';
 
 /* Tell TypeORM to use the container provided by this lib to resolve it's dependencies. */
 typeorm.useContainer(Container);
