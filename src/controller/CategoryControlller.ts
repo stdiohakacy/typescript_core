@@ -1,17 +1,18 @@
 import { Body, JsonController, Post } from 'routing-controllers';
-import { Inject } from 'typedi';
-import { Category } from '../domain/Category';
-import { ICategoryRepository } from '../base/repository/ICategoryRepository';
+import { CreateCategoryCommand } from '../usecase/commands/CreateCategoryCommand';
+import { CreateCategoryCommandHandler } from '../usecase/commands/CreateCategoryCommandHandler';
 
 @JsonController('/v1/categories')
 export class CategoryController {
-  @Inject('category.repository')
-  private readonly _categoryRepository: ICategoryRepository;
+  constructor(
+    private readonly _createCategoryCommandHandler: CreateCategoryCommandHandler
+  ) {}
+
+  // @Inject('category.repository')
+  // private readonly _categoryRepository: ICategoryRepository;
 
   @Post('/')
-  async create(@Body() category: any) {
-    const data = new Category();
-    data.name = category.name;
-    return this._categoryRepository.create(data);
+  async create(@Body() param: CreateCategoryCommand): Promise<string> {
+    return await this._createCategoryCommandHandler.handle(param);
   }
 }
