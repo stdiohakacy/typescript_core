@@ -17,6 +17,6 @@ export type SelectFilterPaginationQuery<T> = SelectFilterListQuery<T> & { skip: 
 export type UpdateFieldQuery<T> = Extract<keyof T, string>;
 
 export enum SortType {
-    Asc = 'ASC',
-    Desc = 'DESC'
+    ASC = 'ASC',
+    DESC = 'DESC'
 }
