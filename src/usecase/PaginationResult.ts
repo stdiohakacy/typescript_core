@@ -10,7 +10,7 @@ export class Pagination {
     }
 }
 
-export class PaginationResult<T>{
+export class PaginationResult<T> {
     pagination: Pagination;
     data: T[];
 

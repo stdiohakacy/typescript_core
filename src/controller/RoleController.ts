@@ -5,7 +5,7 @@ import { CreateRoleCommandHandler } from "../usecase/commands/role/CreateRoleCom
 import { DeleteRoleCommand } from "../usecase/commands/role/DeleteRoleCommand";
 import { UpdateRoleCommand } from "../usecase/commands/role/UpdateRoleCommand";
 import { UpdateRoleCommandHandler } from "../usecase/commands/role/UpdateRoleCommandHandler";
-import { PaginationResult } from "../usecase/PanigationResult";
+import { PaginationResult } from "../usecase/PaginationResult";
 import { FindRoleQuery } from "../usecase/queries/role/FindRoleQuery";
 import { FindRoleQueryHandler } from "../usecase/queries/role/FindRoleQueryHandler";
 import { FindRoleQueryResult } from "../usecase/queries/role/FindRoleQueryResult";

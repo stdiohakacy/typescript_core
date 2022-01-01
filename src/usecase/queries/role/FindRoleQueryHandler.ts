@@ -1,7 +1,7 @@
 import { Inject, Service } from "typedi";
 import { FindRoleFilter, IRoleRepository } from "../../../base/repository/IRoleRepository";
 import { IQueryHandler } from "../../../base/usecase/IQueryHandler";
-import { PaginationResult } from "../../PanigationResult";
+import { PaginationResult } from "../../PaginationResult";
 import { FindRoleQuery } from "./FindRoleQuery";
 import { FindRoleQueryResult } from "./FindRoleQueryResult";
 
