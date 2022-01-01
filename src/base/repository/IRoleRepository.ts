@@ -3,11 +3,11 @@ import { IBaseRepository } from './IBaseRepository';
 import { DbPagination } from './../../database/DbPagination';
 
 export class FindRoleFilter extends DbPagination {
-    keyword: string | null;
+    keyword?: string;
 }
 
 export class FindRoleCommonFilter extends DbPagination {
-    keyword: string | null;
+    keyword?: string;
 }
 
 export interface IRoleRepository extends IBaseRepository<Role, string> {
