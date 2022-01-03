@@ -6,7 +6,7 @@ import { ClientStatus } from '../../enums/ClientStatus';
 import * as validator from 'class-validator';
 
 export class Client extends UserBase<IClient> implements IClient {
-    constructor(data: IClient) {
+    constructor(data?: IClient) {
         super(data);
     }
 
