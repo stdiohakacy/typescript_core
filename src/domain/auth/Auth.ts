@@ -5,6 +5,7 @@ import { IAuth } from "./IAuth";
 import * as validator from 'class-validator';
 import { AuthType } from "../../enums/AuthType";
 import { hashMD5 } from "../../libs/crypt";
+import { User } from "../user/User";
 
 export class Auth extends BaseEntity<IAuth> implements IAuth {
     constructor(data?: IAuth) {
@@ -93,6 +94,11 @@ export class Auth extends BaseEntity<IAuth> implements IAuth {
 
     set forgotExpire(val: Date | null) {
         this.data.forgotExpire = val;
+    }
+
+    /* Relationship */
+    get user(): User | null {
+        return this.data.user ? new User(this.data.user) : null;
     }
 
     private _hashPassword(password: string): string {

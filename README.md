@@ -5,3 +5,6 @@
 
 2. Run migration
 ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run
+
+3. Revert migration
+./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert

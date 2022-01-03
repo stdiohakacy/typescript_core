@@ -1,10 +1,12 @@
-import { Column } from 'typeorm';
+import { MANAGER_SCHEMA } from './../schema/ManagerSchema';
+import { Column, Entity } from 'typeorm';
 import { IManager } from '../domain/manager/IManager';
 import { Manager } from '../domain/manager/Manager';
 import { ManagerStatus } from '../enums/ManagerStatus';
-import { MANAGER_SCHEMA } from '../schema/ManagerSchema';
 import { UserDb } from './UserDb';
 
+
+@Entity(MANAGER_SCHEMA.TABLE_NAME)
 export class ManagerDb extends UserDb implements IManager {
     @Column('enum', { name: MANAGER_SCHEMA.COLUMNS.STATUS, enum: ManagerStatus  })
     status: ManagerStatus;

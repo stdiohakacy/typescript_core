@@ -1,4 +1,4 @@
-import { IBaseRepository } from "../../base/repository/IBaseRepository";
+import { IBaseRepository } from "./IBaseRepository";
 import { DbPagination } from "../../database/DbPagination";
 import { IDbQueryRunner } from "../../database/IDbQueryRunner";
 import { Manager } from "../../domain/manager/Manager";

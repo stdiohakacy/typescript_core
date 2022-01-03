@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import './database/DbContext';
 import './database/DbRegister';
+import './ServiceRegister';
 import * as routingController from 'routing-controllers';
 import * as typeorm from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';

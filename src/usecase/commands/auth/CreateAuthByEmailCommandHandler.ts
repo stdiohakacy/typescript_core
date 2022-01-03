@@ -23,7 +23,6 @@ export class CreateAuthByEmailCommandHandler implements ICommandHandler<CreateAu
         auth.username = param.email;
         auth.password = param.password;
 
-        return '';
         const user = await this._userRepository.getById(param.userId);
         if(!user)
             throw new SystemError(MessageError.PARAM_NOT_EXISTS, 'user')
@@ -34,6 +33,6 @@ export class CreateAuthByEmailCommandHandler implements ICommandHandler<CreateAu
         const id = await this._authRepository.create(auth);
         if(!id)
             throw new SystemError(MessageError.DATA_CANNOT_SAVE);
-        // return id;
+        return id;
     }
 }
