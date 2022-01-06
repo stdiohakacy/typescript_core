@@ -27,6 +27,7 @@
       "noUnusedParameters": true,
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true,
-      "noImplicitOverride": true
+      "noImplicitOverride": true,
+      "experimentalDecorators": true
    }
 }

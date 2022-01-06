@@ -22,4 +22,10 @@ export class MailService implements IMailService {
 
         return result;
     }
+
+    async resendUserActivation(name: string, email: string, activeKey: string): Promise<void> {
+        const template = UserActivationTemplate.getTemplate(name, email, activeKey);
+        const content = this._generator.generateHtmlContent(template);
+        await this._sender.sendHtml(MAIL_SENDER_NAME, MAIL_SENDER_EMAIL, email, 'Re-Sending Account Activation', content);
+    }
 }
