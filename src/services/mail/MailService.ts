@@ -3,6 +3,7 @@ import { MAIL_SENDER_EMAIL, MAIL_SENDER_NAME } from './../../configs/Configurati
 import { IMailService } from "./IMailService";
 import { MailGenerator } from "./MailGenerator";
 import { MailSender } from "./MailSender";
+import { ForgotPasswordTemplate } from "./templates/ForgotPasswordTemplate";
 import { UserActivationTemplate } from "./templates/UserActivationTemplate";
 
 @Service('mail.service')
@@ -27,5 +28,11 @@ export class MailService implements IMailService {
         const template = UserActivationTemplate.getTemplate(name, email, activeKey);
         const content = this._generator.generateHtmlContent(template);
         await this._sender.sendHtml(MAIL_SENDER_NAME, MAIL_SENDER_EMAIL, email, 'Re-Sending Account Activation', content);
+    }
+
+    async sendForgotPassword(name: string, email: string, forgotKey: string): Promise<void> {
+        const template = ForgotPasswordTemplate.getTemplate(name, email, forgotKey);
+        const content = this._generator.generateHtmlContent(template);
+        await this._sender.sendHtml(MAIL_SENDER_NAME, MAIL_SENDER_EMAIL, email, 'Forgot Your Password', content);
     }
 }

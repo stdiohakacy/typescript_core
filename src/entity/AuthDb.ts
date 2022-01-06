@@ -37,6 +37,8 @@ export class AuthDb extends BaseDbEntity<Auth> implements IAuth {
         return new Auth(this);
     }
 
+    /* Handlers */
+
     fromEntity(entity: Auth) {
         return entity.toData();
     }

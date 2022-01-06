@@ -1,3 +1,4 @@
+import { ForgotPasswordByEmailCommandHandler } from './../usecase/commands/auth/ForgotPasswordByEmailCommandHandler';
 import { GetUserAuthByJwtQueryHandler } from './../usecase/commands/auth/GetUserAuthByJwtQueryHandler';
 import { LoginByEmailQueryHandler } from './../usecase/queries/auth/LoginByEmailQueryHandler';
 import { Service } from "typedi";
@@ -5,6 +6,7 @@ import { BodyParam, HeaderParam, JsonController, Post } from 'routing-controller
 import { UserAuthenticated } from '../domain/UserAuthenticated';
 import { LoginByEmailQuery } from '../usecase/queries/auth/LoginByEmailQuery';
 import { GetUserAuthByJwtQuery } from '../usecase/commands/auth/GetUserAuthByJwtQuery';
+import { ForgotPasswordByEmailCommand } from '../usecase/commands/auth/ForgotPasswordByEmailCommand';
 
 @Service()
 @JsonController('/auth')
@@ -12,6 +14,7 @@ export class AuthController {
     constructor(
         private readonly _loginByEmailQueryHandler: LoginByEmailQueryHandler,
         private readonly _getUserAuthByJwtQueryHandler: GetUserAuthByJwtQueryHandler,
+        private readonly _forgotPasswordByEmailCommandHandler: ForgotPasswordByEmailCommandHandler
     ) {}
 
     @Post('/login')
@@ -33,5 +36,12 @@ export class AuthController {
         else if (token)
             param.token = token;
         return await this._getUserAuthByJwtQueryHandler.handle(param)
+    }
+
+    @Post('/forgot-password')
+    async forgotPassword(@BodyParam('email') email: string): Promise<boolean> {
+        const param = new ForgotPasswordByEmailCommand();
+        param.email = email;
+        return await this._forgotPasswordByEmailCommandHandler.handle(param);
     }
 }
