@@ -17,6 +17,8 @@ import { ActiveClientCommand } from './../usecase/commands/category/ActiveClient
 import { GetClientByIdQueryHandler } from '../usecase/queries/client/GetClientByIdQueryHandler';
 import { GetClientByIdQuery } from '../usecase/queries/client/GetClientByIdQuery';
 import { FindClientQuery } from '../usecase/queries/client/FindClientQuery';
+import { ArchiveClientCommandHandler } from '../usecase/commands/client/ArchiveClientCommandHandler';
+import { ArchiveClientCommand } from '../usecase/commands/client/ArchiveClientCommand';
 
 @Service()
 @JsonController("/clients")
@@ -30,6 +32,7 @@ export class ClientController {
         private readonly _deleteClientCommandHandler: DeleteClientCommandHandler,
         private readonly _getClientByIdQueryHandler: GetClientByIdQueryHandler,
         private readonly _findClientQueryHandler: FindClientQueryHandler,
+        private readonly _archiveClientCommandHandler: ArchiveClientCommandHandler,
     ) {}
 
     @Get('/')
@@ -75,5 +78,11 @@ export class ClientController {
     async delete(@Params() param: DeleteClientCommand) {
         param.roleAuthId = RoleId.SUPER_ADMIN;
         return await this._deleteClientCommandHandler.handle(param);
+    }
+
+    @Post('/:id([0-9a-f-]{36})/archive')
+    async archive(@Params() param: ArchiveClientCommand) {
+        param.roleAuthId = RoleId.SUPER_ADMIN;
+        return await this._archiveClientCommandHandler.handle(param);
     }
 }
