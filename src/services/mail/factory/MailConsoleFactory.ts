@@ -1,4 +1,4 @@
-import { IMailProvider } from "./IMailProvider";
+import { IMailProvider } from "../IMailProvider";
 
 export class MailConsoleFactory implements IMailProvider {
     async send(senderName: string, senderMail: string, emails: string | string[], subject: string, content: string): Promise<any> {

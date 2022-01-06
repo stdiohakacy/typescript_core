@@ -1,8 +1,8 @@
-import { MailConsoleFactory } from './MailConsoleFactory';
+import { MailConsoleFactory } from './factory/MailConsoleFactory';
 import { MAIL_PROVIDER } from "../../configs/Configuration";
 import { MailProvider } from "../../configs/ServiceProvider";
 import { IMailProvider } from "./IMailProvider";
-import { GoogleSmtpFactory } from './GoogleSmtpFactory';
+import { GoogleSmtpFactory } from './factory/GoogleSmtpFactory';
 
 export class MailSender implements IMailProvider {
     private readonly _provider: IMailProvider;

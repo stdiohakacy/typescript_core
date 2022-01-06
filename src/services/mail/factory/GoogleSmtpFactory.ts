@@ -1,6 +1,6 @@
-import { IMailProvider } from './IMailProvider';
+import { IMailProvider } from '../IMailProvider';
 import * as nodeMailer from 'nodemailer'
-import { GOOGLE_SMTP_PASSWORD, GOOGLE_SMTP_USERNAME } from '../../configs/Configuration';
+import { GOOGLE_SMTP_PASSWORD, GOOGLE_SMTP_USERNAME } from '../../../configs/Configuration';
 
 /**
  * Need config Google account before use Google SMTP.
