@@ -1,4 +1,4 @@
-import { Inject } from 'typedi';
+import { Inject, Service } from 'typedi';
 import { v4 } from 'uuid';
 import { IAuthRepository } from '../../../base/repository/IAuthRepository';
 import { IClientRepository } from '../../../base/repository/IClientRepository';
@@ -13,6 +13,7 @@ import { MessageError } from './../../../exceptions/MessageError';
 import { SystemError } from './../../../exceptions/SystemError';
 import { CreateClientCommand } from "./CreateClientCommand";
 
+@Service()
 export class CreateClientCommandHandler implements ICommandHandler<CreateClientCommand, string> {
     @Inject()
     private readonly _createAuthByEmailCommandHandler: CreateAuthByEmailCommandHandler;

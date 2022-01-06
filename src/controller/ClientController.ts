@@ -1,9 +1,11 @@
-import { Body, JsonController, Param, Post, Put } from "routing-controllers";
+import { DeleteClientCommandHandler } from './../usecase/commands/client/DeleteClientCommandHandler';
+import { Body, Delete, JsonController, Param, Params, Post, Put } from "routing-controllers";
 import { Service } from "typedi";
 import { RoleId } from "../enums/RoleId";
 import { ActiveClientCommandHandler } from '../usecase/commands/category/ActiveClientCommandHandler';
 import { CreateClientCommand } from "../usecase/commands/client/CreateClientCommand";
 import { CreateClientCommandHandler } from "../usecase/commands/client/CreateClientCommandHandler";
+import { DeleteClientCommand } from "../usecase/commands/client/DeleteClientCommand";
 import { RegisterClientCommand } from "../usecase/commands/client/RegisterClientCommand";
 import { RegisterClientCommandHandler } from "../usecase/commands/client/RegisterClientCommandHandler";
 import { ResendActivationCommand } from "../usecase/commands/client/ResendActivationCommand";
@@ -21,6 +23,7 @@ export class ClientController {
         private readonly _resendActivationCommandHandler: ResendActivationCommandHandler,
         private readonly _createClientCommandHandler: CreateClientCommandHandler,
         private readonly _updateClientCommandHandler: UpdateClientCommandHandler,
+        private readonly _deleteClientCommandHandler: DeleteClientCommandHandler,
     ) {}
 
     @Post('/register')
@@ -48,5 +51,11 @@ export class ClientController {
     async update(@Param('id') id: string, @Body() param: UpdateClientCommand): Promise<boolean> {
         param.id = id;
         return await this._updateClientCommandHandler.handle(param);
+    }
+
+    @Delete('/:id([0-9a-f-]{36})')
+    async delete(@Params() param: DeleteClientCommand) {
+        param.roleAuthId = RoleId.SUPER_ADMIN;
+        return await this._deleteClientCommandHandler.handle(param);
     }
 }
