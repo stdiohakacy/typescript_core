@@ -1,11 +1,11 @@
-import { MessageError } from './../../../exceptions/MessageError';
-import { SystemError } from './../../../exceptions/SystemError';
-import { RoleId } from './../../../enums/RoleId';
-import { UpdateClientCommand } from './UpdateClientCommand';
-import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { Inject, Service } from 'typedi';
 import { IClientRepository } from '../../../base/repository/IClientRepository';
+import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { Client } from '../../../domain/client/Client';
+import { RoleId } from './../../../enums/RoleId';
+import { MessageError } from './../../../exceptions/MessageError';
+import { SystemError } from './../../../exceptions/SystemError';
+import { UpdateClientCommand } from './UpdateClientCommand';
 
 @Service()
 export class UpdateClientCommandHandler implements ICommandHandler<UpdateClientCommand, boolean> {

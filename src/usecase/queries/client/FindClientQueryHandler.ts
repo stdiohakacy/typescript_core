@@ -1,12 +1,12 @@
-import { FindClientFilter, IClientRepository } from './../../../base/repository/IClientRepository';
-import { FindClientQueryResult } from './FindClientQueryResult';
 import { Inject, Service } from 'typedi';
+import { RoleId } from '../../../enums/RoleId';
+import { MessageError } from '../../../exceptions/MessageError';
+import { SystemError } from '../../../exceptions/SystemError';
+import { FindClientFilter, IClientRepository } from './../../../base/repository/IClientRepository';
 import { IQueryHandler } from './../../../base/usecase/IQueryHandler';
 import { PaginationResult } from './../../PaginationResult';
 import { FindClientQuery } from './FindClientQuery';
-import { RoleId } from '../../../enums/RoleId';
-import { SystemError } from '../../../exceptions/SystemError';
-import { MessageError } from '../../../exceptions/MessageError';
+import { FindClientQueryResult } from './FindClientQueryResult';
 
 
 @Service()

@@ -1,12 +1,12 @@
-import { Auth } from './../../../domain/auth/Auth';
-import { IAuthRepository } from './../../../base/repository/IAuthRepository';
-import { CreateAuthByEmailCommand } from './CreateAuthByEmailCommand';
 import { Inject, Service } from "typedi";
-import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { IUserRepository } from '../../../base/repository/IUserRepository';
+import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { AuthType } from '../../../enums/AuthType';
-import { SystemError } from '../../../exceptions/SystemError';
 import { MessageError } from '../../../exceptions/MessageError';
+import { SystemError } from '../../../exceptions/SystemError';
+import { IAuthRepository } from './../../../base/repository/IAuthRepository';
+import { Auth } from './../../../domain/auth/Auth';
+import { CreateAuthByEmailCommand } from './CreateAuthByEmailCommand';
 
 @Service()
 export class CreateAuthByEmailCommandHandler implements ICommandHandler<CreateAuthByEmailCommand, string> {

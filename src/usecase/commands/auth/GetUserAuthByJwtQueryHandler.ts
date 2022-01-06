@@ -1,12 +1,12 @@
+import * as validator from 'class-validator';
+import { Inject, Service } from 'typedi';
+import { IQueryHandler } from './../../../base/usecase/IQueryHandler';
+import { UserAuthenticated } from './../../../domain/UserAuthenticated';
 import { AccessDeniedError } from './../../../exceptions/AccessDeniedError';
-import { IAuthJwtService } from './../../../services/auth/IAuthJwtService';
 import { MessageError } from './../../../exceptions/MessageError';
 import { UnauthorizedError } from './../../../exceptions/UnauthorizedError';
-import { UserAuthenticated } from './../../../domain/UserAuthenticated';
+import { IAuthJwtService } from './../../../services/auth/IAuthJwtService';
 import { GetUserAuthByJwtQuery } from './GetUserAuthByJwtQuery';
-import { IQueryHandler } from './../../../base/usecase/IQueryHandler';
-import { Inject, Service } from 'typedi';
-import * as validator from 'class-validator';
 
 @Service()
 export class GetUserAuthByJwtQueryHandler implements IQueryHandler<GetUserAuthByJwtQuery, UserAuthenticated> {

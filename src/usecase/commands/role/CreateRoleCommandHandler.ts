@@ -1,9 +1,9 @@
-import { MessageError } from './../../../exceptions/MessageError';
 import { Inject, Service } from "typedi";
 import { IRoleRepository } from "../../../base/repository/IRoleRepository";
 import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { Role } from "../../../domain/role/Role";
 import { SystemError } from "../../../exceptions/SystemError";
+import { MessageError } from './../../../exceptions/MessageError';
 import { CreateRoleCommand } from "./CreateRoleCommand";
 
 @Service()

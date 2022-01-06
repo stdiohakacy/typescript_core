@@ -1,10 +1,10 @@
-import { MessageError } from './../../../exceptions/MessageError';
-import { SystemError } from './../../../exceptions/SystemError';
 import { Inject, Service } from "typedi";
 import { IRoleRepository } from "../../../base/repository/IRoleRepository";
 import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
-import { UpdateRoleCommand } from "./UpdateRoleCommand";
 import { Role } from '../../../domain/role/Role';
+import { MessageError } from './../../../exceptions/MessageError';
+import { SystemError } from './../../../exceptions/SystemError';
+import { UpdateRoleCommand } from "./UpdateRoleCommand";
 
 @Service()
 export class UpdateRoleCommandHandler implements ICommandHandler<UpdateRoleCommand, boolean> {

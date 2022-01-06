@@ -1,10 +1,10 @@
+import { Inject, Service } from "typedi";
+import { IClientRepository } from '../../../base/repository/IClientRepository';
+import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
+import { RoleId } from '../../../enums/RoleId';
 import { MessageError } from './../../../exceptions/MessageError';
 import { SystemError } from './../../../exceptions/SystemError';
 import { DeleteClientCommand } from './DeleteClientCommand';
-import { Inject, Service } from "typedi";
-import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
-import { IClientRepository } from '../../../base/repository/IClientRepository';
-import { RoleId } from '../../../enums/RoleId';
 
 @Service()
 export class DeleteClientCommandHandler implements ICommandHandler<DeleteClientCommand, boolean> {

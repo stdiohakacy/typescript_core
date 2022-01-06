@@ -1,11 +1,11 @@
+import { Inject, Service } from 'typedi';
+import { IClientRepository } from './../../../base/repository/IClientRepository';
+import { IQueryHandler } from './../../../base/usecase/IQueryHandler';
+import { RoleId } from './../../../enums/RoleId';
 import { MessageError } from './../../../exceptions/MessageError';
 import { SystemError } from './../../../exceptions/SystemError';
-import { RoleId } from './../../../enums/RoleId';
-import { IClientRepository } from './../../../base/repository/IClientRepository';
-import { GetClientByIdQueryResult } from './GetClientByIdQueryResult';
 import { GetClientByIdQuery } from './GetClientByIdQuery';
-import { IQueryHandler } from './../../../base/usecase/IQueryHandler';
-import { Inject, Service } from 'typedi'
+import { GetClientByIdQueryResult } from './GetClientByIdQueryResult';
 
 @Service()
 export class GetClientByIdQueryHandler implements IQueryHandler<GetClientByIdQuery, GetClientByIdQueryResult> {

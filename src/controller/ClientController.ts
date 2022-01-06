@@ -1,9 +1,9 @@
-import { FindClientQueryHandler } from './../usecase/queries/client/FindClientQueryHandler';
-import { DeleteClientCommandHandler } from './../usecase/commands/client/DeleteClientCommandHandler';
 import { Body, Delete, Get, JsonController, Param, Params, Post, Put, QueryParams } from "routing-controllers";
 import { Service } from "typedi";
 import { RoleId } from "../enums/RoleId";
 import { ActiveClientCommandHandler } from '../usecase/commands/category/ActiveClientCommandHandler';
+import { ArchiveClientCommand } from '../usecase/commands/client/ArchiveClientCommand';
+import { ArchiveClientCommandHandler } from '../usecase/commands/client/ArchiveClientCommandHandler';
 import { CreateClientCommand } from "../usecase/commands/client/CreateClientCommand";
 import { CreateClientCommandHandler } from "../usecase/commands/client/CreateClientCommandHandler";
 import { DeleteClientCommand } from "../usecase/commands/client/DeleteClientCommand";
@@ -13,12 +13,12 @@ import { ResendActivationCommand } from "../usecase/commands/client/ResendActiva
 import { ResendActivationCommandHandler } from "../usecase/commands/client/ResendActivationCommandHandler";
 import { UpdateClientCommand } from "../usecase/commands/client/UpdateClientCommand";
 import { UpdateClientCommandHandler } from "../usecase/commands/client/UpdateClientCommandHandler";
-import { ActiveClientCommand } from './../usecase/commands/category/ActiveClientCommand';
-import { GetClientByIdQueryHandler } from '../usecase/queries/client/GetClientByIdQueryHandler';
-import { GetClientByIdQuery } from '../usecase/queries/client/GetClientByIdQuery';
 import { FindClientQuery } from '../usecase/queries/client/FindClientQuery';
-import { ArchiveClientCommandHandler } from '../usecase/commands/client/ArchiveClientCommandHandler';
-import { ArchiveClientCommand } from '../usecase/commands/client/ArchiveClientCommand';
+import { GetClientByIdQuery } from '../usecase/queries/client/GetClientByIdQuery';
+import { GetClientByIdQueryHandler } from '../usecase/queries/client/GetClientByIdQueryHandler';
+import { ActiveClientCommand } from './../usecase/commands/category/ActiveClientCommand';
+import { DeleteClientCommandHandler } from './../usecase/commands/client/DeleteClientCommandHandler';
+import { FindClientQueryHandler } from './../usecase/queries/client/FindClientQueryHandler';
 
 @Service()
 @JsonController("/clients")

@@ -1,13 +1,12 @@
+import { BodyParam, HeaderParam, JsonController, Post } from 'routing-controllers';
+import { Service } from "typedi";
+import { UserAuthenticated } from '../domain/UserAuthenticated';
+import { ForgotPasswordByEmailCommand } from '../usecase/commands/auth/ForgotPasswordByEmailCommand';
+import { GetUserAuthByJwtQuery } from '../usecase/commands/auth/GetUserAuthByJwtQuery';
+import { LoginByEmailQuery } from '../usecase/queries/auth/LoginByEmailQuery';
 import { ForgotPasswordByEmailCommandHandler } from './../usecase/commands/auth/ForgotPasswordByEmailCommandHandler';
 import { GetUserAuthByJwtQueryHandler } from './../usecase/commands/auth/GetUserAuthByJwtQueryHandler';
 import { LoginByEmailQueryHandler } from './../usecase/queries/auth/LoginByEmailQueryHandler';
-import { Service } from "typedi";
-import { BodyParam, HeaderParam, JsonController, Post } from 'routing-controllers';
-import { UserAuthenticated } from '../domain/UserAuthenticated';
-import { LoginByEmailQuery } from '../usecase/queries/auth/LoginByEmailQuery';
-import { GetUserAuthByJwtQuery } from '../usecase/commands/auth/GetUserAuthByJwtQuery';
-import { ForgotPasswordByEmailCommand } from '../usecase/commands/auth/ForgotPasswordByEmailCommand';
-
 @Service()
 @JsonController('/auth')
 export class AuthController {

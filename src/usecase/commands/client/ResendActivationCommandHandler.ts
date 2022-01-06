@@ -1,15 +1,15 @@
-import { IMailService } from './../../../services/mail/IMailService';
-import { Client } from './../../../domain/client/Client';
-import { ClientStatus } from './../../../enums/ClientStatus';
 import * as validator from 'class-validator';
+import * as crypto from 'crypto';
 import { Inject, Service } from 'typedi';
+import { addSeconds } from '../../../libs/date';
 import { IClientRepository } from './../../../base/repository/IClientRepository';
 import { ICommandHandler } from './../../../base/usecase/ICommandHandler';
+import { Client } from './../../../domain/client/Client';
+import { ClientStatus } from './../../../enums/ClientStatus';
 import { MessageError } from './../../../exceptions/MessageError';
 import { SystemError } from './../../../exceptions/SystemError';
+import { IMailService } from './../../../services/mail/IMailService';
 import { ResendActivationCommand } from './ResendActivationCommand';
-import * as crypto from 'crypto';
-import { addSeconds } from '../../../libs/date';
 
 @Service()
 export class ResendActivationCommandHandler implements ICommandHandler<ResendActivationCommand, boolean> {

@@ -1,12 +1,12 @@
-import { ArchiveClientCommand } from './ArchiveClientCommand';
 import { Inject, Service } from "typedi";
-import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { IClientRepository } from '../../../base/repository/IClientRepository';
-import { RoleId } from '../../../enums/RoleId';
-import { SystemError } from '../../../exceptions/SystemError';
-import { MessageError } from '../../../exceptions/MessageError';
+import { ICommandHandler } from "../../../base/usecase/ICommandHandler";
 import { Client } from '../../../domain/client/Client';
 import { ClientStatus } from '../../../enums/ClientStatus';
+import { RoleId } from '../../../enums/RoleId';
+import { MessageError } from '../../../exceptions/MessageError';
+import { SystemError } from '../../../exceptions/SystemError';
+import { ArchiveClientCommand } from './ArchiveClientCommand';
 
 @Service()
 export class ArchiveClientCommandHandler implements ICommandHandler<ArchiveClientCommand, boolean> {
