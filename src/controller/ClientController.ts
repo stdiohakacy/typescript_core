@@ -1,10 +1,15 @@
-import { Body, JsonController, Post } from "routing-controllers";
+import { Body, JsonController, Param, Post, Put } from "routing-controllers";
 import { Service } from "typedi";
+import { RoleId } from "../enums/RoleId";
 import { ActiveClientCommandHandler } from '../usecase/commands/category/ActiveClientCommandHandler';
+import { CreateClientCommand } from "../usecase/commands/client/CreateClientCommand";
+import { CreateClientCommandHandler } from "../usecase/commands/client/CreateClientCommandHandler";
 import { RegisterClientCommand } from "../usecase/commands/client/RegisterClientCommand";
 import { RegisterClientCommandHandler } from "../usecase/commands/client/RegisterClientCommandHandler";
 import { ResendActivationCommand } from "../usecase/commands/client/ResendActivationCommand";
 import { ResendActivationCommandHandler } from "../usecase/commands/client/ResendActivationCommandHandler";
+import { UpdateClientCommand } from "../usecase/commands/client/UpdateClientCommand";
+import { UpdateClientCommandHandler } from "../usecase/commands/client/UpdateClientCommandHandler";
 import { ActiveClientCommand } from './../usecase/commands/category/ActiveClientCommand';
 
 @Service()
@@ -14,6 +19,8 @@ export class ClientController {
         private readonly _registerClientCommandHandler: RegisterClientCommandHandler,
         private readonly _activeClientCommandHandler: ActiveClientCommandHandler,
         private readonly _resendActivationCommandHandler: ResendActivationCommandHandler,
+        private readonly _createClientCommandHandler: CreateClientCommandHandler,
+        private readonly _updateClientCommandHandler: UpdateClientCommandHandler,
     ) {}
 
     @Post('/register')
@@ -29,5 +36,17 @@ export class ClientController {
     @Post('/resend-activation')
     async resendActivation(@Body() param: ResendActivationCommand) {
         return this._resendActivationCommandHandler.handle(param);
+    }
+
+    @Post('/')
+    async create(@Body() param: CreateClientCommand) {
+        param.roleAuthId = RoleId.CLIENT;
+        return await this._createClientCommandHandler.handle(param);
+    }
+
+    @Put('/:id([0-9a-f-]{36})')
+    async update(@Param('id') id: string, @Body() param: UpdateClientCommand): Promise<boolean> {
+        param.id = id;
+        return await this._updateClientCommandHandler.handle(param);
     }
 }
