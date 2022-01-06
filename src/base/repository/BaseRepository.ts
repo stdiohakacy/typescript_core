@@ -23,7 +23,6 @@ export abstract class BaseRepository<TEntity extends IBaseEntity, TDbEntity exte
         const query = this.repository.createQueryBuilder(this._schema.TABLE_NAME)
             .skip(filter.skip)
             .take(filter.limit);
-
         const [list, count] = await query.getManyAndCount();
         return [list.map(item => item.toEntity()), count];
     }

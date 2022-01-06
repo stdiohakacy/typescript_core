@@ -1,5 +1,6 @@
+import { FindClientQueryHandler } from './../usecase/queries/client/FindClientQueryHandler';
 import { DeleteClientCommandHandler } from './../usecase/commands/client/DeleteClientCommandHandler';
-import { Body, Delete, Get, JsonController, Param, Params, Post, Put } from "routing-controllers";
+import { Body, Delete, Get, JsonController, Param, Params, Post, Put, QueryParams } from "routing-controllers";
 import { Service } from "typedi";
 import { RoleId } from "../enums/RoleId";
 import { ActiveClientCommandHandler } from '../usecase/commands/category/ActiveClientCommandHandler';
@@ -15,6 +16,7 @@ import { UpdateClientCommandHandler } from "../usecase/commands/client/UpdateCli
 import { ActiveClientCommand } from './../usecase/commands/category/ActiveClientCommand';
 import { GetClientByIdQueryHandler } from '../usecase/queries/client/GetClientByIdQueryHandler';
 import { GetClientByIdQuery } from '../usecase/queries/client/GetClientByIdQuery';
+import { FindClientQuery } from '../usecase/queries/client/FindClientQuery';
 
 @Service()
 @JsonController("/clients")
@@ -26,8 +28,15 @@ export class ClientController {
         private readonly _createClientCommandHandler: CreateClientCommandHandler,
         private readonly _updateClientCommandHandler: UpdateClientCommandHandler,
         private readonly _deleteClientCommandHandler: DeleteClientCommandHandler,
-        private readonly _getClientByIdQueryHandler: GetClientByIdQueryHandler
+        private readonly _getClientByIdQueryHandler: GetClientByIdQueryHandler,
+        private readonly _findClientQueryHandler: FindClientQueryHandler,
     ) {}
+
+    @Get('/')
+    async find(@QueryParams() param: FindClientQuery) {
+        param.roleAuthId = RoleId.SUPER_ADMIN;
+        return await this._findClientQueryHandler.handle(param);
+    }
 
     @Get('/:id([0-9a-f-]{36})')
     async getById(@Params() param: GetClientByIdQuery) {
