@@ -10,7 +10,7 @@ export abstract class BaseDbEntity<T extends IBaseEntity> {
     updatedAt: Date;
 
     @DeleteDateColumn({ name: BASE_SCHEMA.COLUMNS.DELETED_AT, type: 'timestamptz', nullable: true })
-    deletedAt?: Date;
+    deletedAt: Date | null;
 
     /* Handlers */
 

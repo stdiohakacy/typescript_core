@@ -5,7 +5,7 @@ export class GetRoleByIdQueryResult {
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt?: Date;
+    deletedAt: Date | null;
 
     constructor(role: Role) {
         this.id = role.id;
