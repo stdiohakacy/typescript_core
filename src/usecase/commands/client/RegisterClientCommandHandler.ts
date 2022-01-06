@@ -8,6 +8,7 @@ import { IClient } from '../../../domain/client/IClient';
 import { ClientStatus } from '../../../enums/ClientStatus';
 import { RoleId } from '../../../enums/RoleId';
 import { addSeconds } from '../../../libs/date';
+import { IMailService } from '../../../services/mail/IMailService';
 import { CreateAuthByEmailCommand } from '../auth/CreateAuthByEmailCommand';
 import { CreateAuthByEmailCommandHandler } from "../auth/CreateAuthByEmailCommandHandler";
 import { IAuthRepository } from './../../../base/repository/IAuthRepository';
@@ -25,6 +26,9 @@ export class RegisterClientCommandHandler implements ICommandHandler<RegisterCli
 
     @Inject('client.repository')
     private readonly _clientRepository: IClientRepository;
+    
+    @Inject('mail.service')
+    private readonly _mailService: IMailService;
 
     async handle(param: RegisterClientCommand): Promise<boolean> {
     try {
@@ -53,6 +57,10 @@ export class RegisterClientCommandHandler implements ICommandHandler<RegisterCli
         const id = await this._clientRepository.create(client);
         if(!id)
             throw new SystemError(MessageError.DATA_CANNOT_SAVE);
+
+        const name = `${client.firstName} ${client.lastName}`;
+
+        this._mailService.sendUserActivation(name, client.email, client.activeKey);
         
         await this._createAuthByEmailCommandHandler.handle(auth);
         return true;

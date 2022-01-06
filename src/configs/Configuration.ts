@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { convertStringToBoolean } from '../libs/common';
+import { MailProvider } from './ServiceProvider';
 dotenv.config();
 
 // SYSTEM ENVIRONMENT
@@ -25,3 +26,12 @@ export const API_PORT: number = Number(process.env.API_PORT);
 export const AUTH_SIGNATURE: string = process.env.AUTH_SIGNATURE ?? '';
 export const AUTH_SECRET_OR_PRIVATE_KEY: string = process.env.AUTH_SECRET_KEY ?? '';
 export const AUTH_SECRET_OR_PUBLIC_KEY: string = process.env.AUTH_SECRET_KEY ?? '';
+
+// MAIL SERVICE
+export const MAIL_PROVIDER: number = process.env.MAIL_PROVIDER ? Number(process.env.MAIL_PROVIDER) : MailProvider.CONSOLE;
+
+export const MAIL_SENDER_NAME: string = process.env.MAIL_SENDER_NAME ?? '';
+export const MAIL_SENDER_EMAIL: string = process.env.MAIL_SENDER_EMAIL ?? '';
+
+export const GOOGLE_SMTP_USERNAME: string = process.env.GOOGLE_SMTP_USERNAME ?? '';
+export const GOOGLE_SMTP_PASSWORD: string = process.env.GOOGLE_SMTP_PASSWORD ?? '';
