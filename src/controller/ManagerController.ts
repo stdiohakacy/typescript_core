@@ -1,6 +1,7 @@
+import { FindManagerQueryHandler } from './../usecase/queries/manager/FindManagerQueryHandler';
 import { RoleId } from './../enums/RoleId';
 import { DeleteManagerCommand } from './../usecase/commands/manager/DeleteManagerCommand';
-import { Body, Delete, Get, JsonController, Param, Params, Post, Put } from "routing-controllers";
+import { Body, Delete, Get, JsonController, Param, Params, Post, Put, QueryParams } from "routing-controllers";
 import { Service } from "typedi";
 import { CreateManagerCommand } from "../usecase/commands/manager/CreateManagerCommand";
 import { CreateManagerCommandHandler } from "../usecase/commands/manager/CreateManagerCommandHandler";
@@ -9,6 +10,7 @@ import { UpdateManagerCommandHandler } from "../usecase/commands/manager/UpdateM
 import { DeleteManagerCommandHandler } from '../usecase/commands/manager/DeleteManagerCommandHandler';
 import { GetManagerByIdQueryHandler } from '../usecase/queries/manager/GetManagerByIdQueryHandler';
 import { GetManagerByIdQuery } from '../usecase/queries/manager/GetManagerByIdQuery';
+import { FindManagerQuery } from '../usecase/queries/manager/FindManagerQuery';
 
 @Service()
 @JsonController('/managers')
@@ -18,7 +20,14 @@ export class ManagerController {
         private readonly _updateManagerCommandHandler: UpdateManagerCommandHandler,
         private readonly _deleteManagerCommandHandler: DeleteManagerCommandHandler,
         private readonly _getManagerByIdQueryHandler: GetManagerByIdQueryHandler,
+        private readonly _findManagerQueryHandler: FindManagerQueryHandler,
     ) {}
+
+    @Get('/')
+    async find(@QueryParams() param: FindManagerQuery) {
+        param.roleAuthId = RoleId.SUPER_ADMIN;
+        return await this._findManagerQueryHandler.handle(param);
+    }
 
     @Get('/:id([0-9a-f-]{36})')
     async getById(@Params() param: GetManagerByIdQuery) {
