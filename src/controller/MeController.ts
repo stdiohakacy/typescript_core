@@ -1,5 +1,6 @@
-import { UpdateProfileClientCommand } from './../usecase/commands/client/UpdateProfileClientCommand';
-import { Body, BodyParam, CurrentUser, JsonController, Patch, Put } from "routing-controllers";
+import multer from 'multer';
+import path from 'path';
+import { Body, BodyParam, CurrentUser, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
 import { Service } from "typedi";
 import { UserAuthenticated } from "../domain/UserAuthenticated";
 import { GenderType } from "../enums/GenderType";
@@ -11,6 +12,19 @@ import { UpdatePasswordByEmailCommandHandler } from "../usecase/commands/auth/Up
 import { UpdateProfileClientCommandHandler } from "../usecase/commands/client/UpdateProfileClientCommandHandler";
 import { UpdateProfileManagerCommand } from "../usecase/commands/manager/UpdateProfileManagerCommand";
 import { UpdateProfileManagerCommandHandler } from "../usecase/commands/manager/UpdateProfileManagerCommandHandler";
+import { UploadAvatarCommandHandler } from '../usecase/commands/user/UploadAvatarCommandHandler';
+import { UpdateProfileClientCommand } from './../usecase/commands/client/UpdateProfileClientCommand';
+import { UploadAvatarCommand } from "./../usecase/commands/user/UploadAvatarCommand";
+
+const storage = multer.diskStorage({
+    destination(_req, _file, cb) {
+        console.log(`${path.join(__dirname, `../tmp/uploads`)}`)
+        cb(null, `${path.join(__dirname, `../tmp/uploads`)}`);
+    },
+    filename(_req, file, cb) {
+        cb(null, `${file.fieldname}-${Date.now()}`);
+    }
+});
 
 @Service()
 @JsonController("/me")
@@ -18,7 +32,8 @@ export class MeController {
     constructor(
         private readonly _updatePasswordByEmailCommandHandler: UpdatePasswordByEmailCommandHandler,
         private readonly _updateProfileManagerCommandHandler: UpdateProfileManagerCommandHandler,
-        private readonly _updateProfileClientCommandHandler: UpdateProfileClientCommandHandler
+        private readonly _updateProfileClientCommandHandler: UpdateProfileClientCommandHandler,
+        private readonly _uploadAvatarCommandHandler: UploadAvatarCommandHandler
     ) {}
 
     @Patch('/password')
@@ -73,5 +88,16 @@ export class MeController {
         default:
             throw new SystemError(MessageError.DATA_INVALID);
         }
+    }
+
+    @Post('/avatar')
+    async uploadAvatar(
+        @UploadedFile('avatar', { required: true, options: { storage } }) file: Express.Multer.File,
+        // @CurrentUser() _userAuth: UserAuthenticated
+    ) {
+        const param = new UploadAvatarCommand();
+        param.userAuthId = '31872e3e-2ceb-4c43-8277-9a0e41f0f84d';
+        param.file = file;
+        return await this._uploadAvatarCommandHandler.handle(param);
     }
 }

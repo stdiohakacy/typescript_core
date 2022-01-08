@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { convertStringToBoolean } from '../libs/common';
-import { MailProvider } from './ServiceProvider';
+import { MailProvider, StorageProvider } from './ServiceProvider';
 dotenv.config();
 
 // SYSTEM ENVIRONMENT
@@ -35,3 +35,13 @@ export const MAIL_SENDER_EMAIL: string = process.env.MAIL_SENDER_EMAIL ?? '';
 
 export const GOOGLE_SMTP_USERNAME: string = process.env.GOOGLE_SMTP_USERNAME ?? '';
 export const GOOGLE_SMTP_PASSWORD: string = process.env.GOOGLE_SMTP_PASSWORD ?? '';
+
+// LOG SERVICE
+export const LOG_PROVIDER: number = Number(process.env.LOG_PROVIDER);
+// export const LOG_PROVIDER: number = process.env.LOG_PROVIDER ? Number(process.env.LOG_PROVIDER) : LogProvider.WINSTON;
+
+// STORAGE SERVICE
+export const STORAGE_PROVIDER: number = process.env.STORAGE_PROVIDER ? Number(process.env.STORAGE_PROVIDER) : StorageProvider.CONSOLE;
+export const STORAGE_URL: string = process.env.STORAGE_URL ?? 'http://localhost';
+export const STORAGE_UPLOAD_DIR: string = process.env.STORAGE_UPLOAD_DIR ?? '';
+export const BUCKET_NAME: string = process.env.BUCKET_NAME ?? '';

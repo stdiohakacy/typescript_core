@@ -96,6 +96,21 @@ export class UserBase<T extends IUser> extends BaseEntity<T> implements IUser {
         }
         this.data.birthday = val;
     }
+
+    /* Handlers */
+    static validateAvatarFile(file: Express.Multer.File): void {
+        const maxSize = 100 * 100 * 1024; // 100KB
+        const formats = ['jpeg', 'jpg', 'png', 'gif'];
+        const format = file.mimetype.replace('image/', '');
+        if(!formats.includes(format))
+            throw new SystemError(MessageError.PARAM_FORMAT_INVALID, 'avatar file', formats.join(', '));
+        if(file.size > maxSize)
+            throw new SystemError(MessageError.PARAM_SIZE_MAX, 'avatar file', maxSize / 1024, 'KB');
+    }
+
+    static getAvatarPath(id: string, ext: string): string {
+        return `images/users/${id}/avatar.${ext}`;
+    }
 }
 
 export class User extends UserBase<IUser> {}
