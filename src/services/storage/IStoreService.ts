@@ -1,6 +1,7 @@
 import { Readable } from "stream";
 
 export interface IStorageService {
+    checkBucketExist(bucketName: string): Promise<boolean>;
     createBucket(policy: string): Promise<void>;
     mapUrl(urlPath: string): string;
     upload(urlPath: string, filePath: string): Promise<boolean>;

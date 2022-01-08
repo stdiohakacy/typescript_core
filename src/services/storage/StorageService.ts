@@ -1,7 +1,9 @@
+import { S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY } from './../../configs/Configuration';
 import { Readable } from "stream";
 import { Service } from "typedi";
 import { BUCKET_NAME, STORAGE_PROVIDER } from "../../configs/Configuration";
 import { StorageProvider } from "../../configs/ServiceProvider";
+import { AwsS3Factory } from "./factory/AwsS3Factory";
 import { StorageConsoleFactory } from "./factory/StorageConsoleFactory";
 import { IStorageProvider } from "./IStorageProvider";
 import { IStorageService } from "./IStoreService";
@@ -13,14 +15,20 @@ export class StorageService implements IStorageService {
     constructor() {
         switch(STORAGE_PROVIDER) {
             case StorageProvider.CONSOLE:
+            case StorageProvider.AWS_S3:
+                this._provider = new AwsS3Factory(S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY);
+                break;
             default:
                 this._provider = new StorageConsoleFactory();
                 break;
         }
     }
+    checkBucketExist(bucketName: string): Promise<boolean> {
+        return this._provider.checkBucketExist(bucketName);
+    }
 
     async createBucket(policy: string): Promise<void> {
-        const isExist = this._provider.checkBucketExist(BUCKET_NAME);
+        const isExist = await this._provider.checkBucketExist(BUCKET_NAME);
         if(!isExist) {
             await this._provider.createBucket(BUCKET_NAME);
             await this._provider.setBucketPolicy(BUCKET_NAME, policy);

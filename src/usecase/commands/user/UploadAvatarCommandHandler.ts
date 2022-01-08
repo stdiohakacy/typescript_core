@@ -4,7 +4,7 @@ import { IUserRepository } from '../../../base/repository/IUserRepository';
 import { User } from "../../../domain/user/User";
 import { MessageError } from "../../../exceptions/MessageError";
 import { SystemError } from "../../../exceptions/SystemError";
-import { removeFile } from "../../../libs/file";
+import { removeFile } from '../../../libs/file';
 import { IStorageService } from '../../../services/storage/IStoreService';
 import { ICommandHandler } from './../../../base/usecase/ICommandHandler';
 import { UploadAvatarCommand } from './UploadAvatarCommand';
@@ -34,9 +34,11 @@ export class UploadAvatarCommandHandler implements ICommandHandler<UploadAvatarC
 
         if(!hasSucceed)
             throw new SystemError(MessageError.PARAM_CANNOT_UPLOAD, 'avatar file');
+        
         hasSucceed = await this._userRepository.update(param.userAuthId, data);
         if(!hasSucceed)
             throw new SystemError(MessageError.DATA_CANNOT_SAVE);
-        return data.avatar;
+        
+        return avatarPath;
     }
 }

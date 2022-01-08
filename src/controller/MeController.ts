@@ -96,7 +96,7 @@ export class MeController {
         // @CurrentUser() _userAuth: UserAuthenticated
     ) {
         const param = new UploadAvatarCommand();
-        param.userAuthId = '31872e3e-2ceb-4c43-8277-9a0e41f0f84d';
+        param.userAuthId = 'fe966d9e-6a6f-4fea-a6cc-1c0c1063166a';
         param.file = file;
         return await this._uploadAvatarCommandHandler.handle(param);
     }

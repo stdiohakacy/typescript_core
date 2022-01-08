@@ -45,3 +45,7 @@ export const STORAGE_PROVIDER: number = process.env.STORAGE_PROVIDER ? Number(pr
 export const STORAGE_URL: string = process.env.STORAGE_URL ?? 'http://localhost';
 export const STORAGE_UPLOAD_DIR: string = process.env.STORAGE_UPLOAD_DIR ?? '';
 export const BUCKET_NAME: string = process.env.BUCKET_NAME ?? '';
+
+export const S3_REGION: string = process.env.S3_REGION ?? '';
+export const S3_ACCESS_KEY: string = process.env.S3_ACCESS_KEY ?? '';
+export const S3_SECRET_KEY: string = process.env.S3_SECRET_KEY ?? '';
