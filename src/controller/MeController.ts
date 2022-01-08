@@ -1,5 +1,3 @@
-import { GetProfileManagerQuery } from './../usecase/queries/manager/GetProfileManagerQuery';
-import { GetClientByIdQuery } from './../usecase/queries/client/GetClientByIdQuery';
 import multer from 'multer';
 import path from 'path';
 import { Body, BodyParam, CurrentUser, Get, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
@@ -15,11 +13,12 @@ import { UpdateProfileClientCommandHandler } from "../usecase/commands/client/Up
 import { UpdateProfileManagerCommand } from "../usecase/commands/manager/UpdateProfileManagerCommand";
 import { UpdateProfileManagerCommandHandler } from "../usecase/commands/manager/UpdateProfileManagerCommandHandler";
 import { UploadAvatarCommandHandler } from '../usecase/commands/user/UploadAvatarCommandHandler';
+import { GetProfileClientQuery } from '../usecase/queries/client/GetProfileClientQuery';
 import { GetProfileClientQueryHandler } from '../usecase/queries/client/GetProfileClientQueryHandler';
+import { GetProfileManagerQueryHandler } from '../usecase/queries/manager/GetProfileManagerQueryHandler';
 import { UpdateProfileClientCommand } from './../usecase/commands/client/UpdateProfileClientCommand';
 import { UploadAvatarCommand } from "./../usecase/commands/user/UploadAvatarCommand";
-import { GetProfileClientQuery } from '../usecase/queries/client/GetProfileClientQuery';
-import { GetProfileManagerQueryHandler } from '../usecase/queries/manager/GetProfileManagerQueryHandler';
+import { GetProfileManagerQuery } from './../usecase/queries/manager/GetProfileManagerQuery';
 
 const storage = multer.diskStorage({
     destination(_req, _file, cb) {
