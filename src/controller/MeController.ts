@@ -1,6 +1,8 @@
+import { GetProfileManagerQuery } from './../usecase/queries/manager/GetProfileManagerQuery';
+import { GetClientByIdQuery } from './../usecase/queries/client/GetClientByIdQuery';
 import multer from 'multer';
 import path from 'path';
-import { Body, BodyParam, CurrentUser, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
+import { Body, BodyParam, CurrentUser, Get, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
 import { Service } from "typedi";
 import { UserAuthenticated } from "../domain/UserAuthenticated";
 import { GenderType } from "../enums/GenderType";
@@ -13,8 +15,11 @@ import { UpdateProfileClientCommandHandler } from "../usecase/commands/client/Up
 import { UpdateProfileManagerCommand } from "../usecase/commands/manager/UpdateProfileManagerCommand";
 import { UpdateProfileManagerCommandHandler } from "../usecase/commands/manager/UpdateProfileManagerCommandHandler";
 import { UploadAvatarCommandHandler } from '../usecase/commands/user/UploadAvatarCommandHandler';
+import { GetProfileClientQueryHandler } from '../usecase/queries/client/GetProfileClientQueryHandler';
 import { UpdateProfileClientCommand } from './../usecase/commands/client/UpdateProfileClientCommand';
 import { UploadAvatarCommand } from "./../usecase/commands/user/UploadAvatarCommand";
+import { GetProfileClientQuery } from '../usecase/queries/client/GetProfileClientQuery';
+import { GetProfileManagerQueryHandler } from '../usecase/queries/manager/GetProfileManagerQueryHandler';
 
 const storage = multer.diskStorage({
     destination(_req, _file, cb) {
@@ -33,8 +38,23 @@ export class MeController {
         private readonly _updatePasswordByEmailCommandHandler: UpdatePasswordByEmailCommandHandler,
         private readonly _updateProfileManagerCommandHandler: UpdateProfileManagerCommandHandler,
         private readonly _updateProfileClientCommandHandler: UpdateProfileClientCommandHandler,
-        private readonly _uploadAvatarCommandHandler: UploadAvatarCommandHandler
+        private readonly _uploadAvatarCommandHandler: UploadAvatarCommandHandler,
+        private readonly _getProfileClientQueryHandler: GetProfileClientQueryHandler,
+        private readonly _getProfileManagerQueryHandler: GetProfileManagerQueryHandler,
     ) {}
+
+    @Get('/')
+    async getProfile(@CurrentUser() userAuth: UserAuthenticated) {
+        switch(userAuth.roleId){
+            case RoleId.SUPER_ADMIN:
+            case RoleId.MANAGER:
+                return await this._getProfileManagerQueryHandler.handle(new GetProfileManagerQuery(userAuth.userId));
+            case RoleId.CLIENT:
+                return await this._getProfileClientQueryHandler.handle(new GetProfileClientQuery(userAuth.userId));
+            default:
+                throw new SystemError(MessageError.DATA_INVALID);
+        }
+    }
 
     @Patch('/password')
     async updatePassword(
