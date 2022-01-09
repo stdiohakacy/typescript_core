@@ -2,11 +2,14 @@ import express from 'express';
 import { Server } from "http";
 import * as path from 'path';
 import { RoutingControllersOptions } from "routing-controllers";
+import Container from 'typedi';
 import { API_PORT } from './configs/Configuration';
+import { ApiAuthenticator } from './controller/ApiAuthenticator';
 import { HttpServer } from './HttpServer';
 
 export class ApiService {
     setup(callback: any = null): Server {
+        const authenticator = Container.get(ApiAuthenticator);
         const app = express();
 
         app.get('/healthz', (_req, res) => {
@@ -29,8 +32,8 @@ export class ApiService {
             validation: false,
             defaultErrorHandler: false,
             development: true,
-            authorizationChecker: undefined,
-            currentUserChecker: undefined
+            authorizationChecker: authenticator.authorizationHttpChecker,
+            currentUserChecker: authenticator.userAuthChecker
         };
 
         const httpServer = new HttpServer();

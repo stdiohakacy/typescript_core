@@ -1,6 +1,6 @@
 import multer from 'multer';
 import path from 'path';
-import { Body, BodyParam, CurrentUser, Get, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
+import { Authorized, Body, BodyParam, CurrentUser, Get, JsonController, Patch, Post, Put, UploadedFile } from "routing-controllers";
 import { Service } from "typedi";
 import { UserAuthenticated } from "../domain/UserAuthenticated";
 import { GenderType } from "../enums/GenderType";
@@ -43,8 +43,9 @@ export class MeController {
     ) {}
 
     @Get('/')
+    @Authorized()
     async getProfile(@CurrentUser() userAuth: UserAuthenticated) {
-        switch(userAuth.roleId){
+        switch(userAuth.roleId) {
             case RoleId.SUPER_ADMIN:
             case RoleId.MANAGER:
                 return await this._getProfileManagerQueryHandler.handle(new GetProfileManagerQuery(userAuth.userId));

@@ -14,15 +14,17 @@ export class GetUserAuthByJwtQueryHandler implements IQueryHandler<GetUserAuthBy
     private readonly _authJwtService: IAuthJwtService;
 
     async handle(param: GetUserAuthByJwtQuery): Promise<UserAuthenticated> {
-        if(!param.token)
+        if (!param.token)
             throw new UnauthorizedError(MessageError.PARAM_REQUIRED, 'token');
-        if(!validator.isJWT(param.token))
-            throw new UnauthorizedError(MessageError.DATA_INVALID, 'token');
+
+        if (!validator.isJWT(param.token))
+            throw new UnauthorizedError(MessageError.PARAM_INVALID, 'token');
 
         let payload;
         try {
-            payload = this._authJwtService.verify(param.token); 
-        } catch (error) {
+            payload = this._authJwtService.verify(param.token);
+        }
+        catch (error) {
             if (error.name === 'TokenExpiredError')
                 throw new UnauthorizedError(MessageError.PARAM_EXPIRED, 'token');
             else
@@ -31,6 +33,7 @@ export class GetUserAuthByJwtQueryHandler implements IQueryHandler<GetUserAuthBy
 
         if (!payload || !payload.sub || !payload.roleId)
             throw new UnauthorizedError(MessageError.PARAM_INVALID, 'token payload');
+
         if (param.roleIds && param.roleIds.length && !param.roleIds.find(roleId => roleId === payload.roleId))
             throw new AccessDeniedError();
 
