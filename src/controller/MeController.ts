@@ -57,14 +57,14 @@ export class MeController {
     }
 
     @Patch('/password')
+    @Authorized()
     async updatePassword(
         @BodyParam('password') password: string,
         @BodyParam('newPassword') newPassword: string,
-        // @CurrentUser() userAuth: UserAuthenticated
+        @CurrentUser() userAuth: UserAuthenticated
     ): Promise<boolean> {
         const param = new UpdatePasswordByEmailCommand();
-        // param.userAuthId = userAuth.userId;
-        param.userAuthId = '31872e3e-2ceb-4c43-8277-9a0e41f0f84d';
+        param.userAuthId = userAuth.userId;
         param.oldPassword = password;
         param.password = newPassword;
         return await this._updatePasswordByEmailCommandHandler.handle(param);
@@ -113,10 +113,10 @@ export class MeController {
     @Post('/avatar')
     async uploadAvatar(
         @UploadedFile('avatar', { required: true, options: { storage } }) file: Express.Multer.File,
-        // @CurrentUser() _userAuth: UserAuthenticated
+        @CurrentUser() userAuth: UserAuthenticated
     ) {
         const param = new UploadAvatarCommand();
-        param.userAuthId = 'fe966d9e-6a6f-4fea-a6cc-1c0c1063166a';
+        param.userAuthId = userAuth.userId;
         param.file = file;
         return await this._uploadAvatarCommandHandler.handle(param);
     }
