@@ -1,5 +1,6 @@
-import { Body, Delete, Get, JsonController, Param, Params, Post, Put, QueryParams } from "routing-controllers";
+import { Authorized, Body, CurrentUser, Delete, Get, JsonController, Param, Params, Post, Put, QueryParams } from "routing-controllers";
 import { Service } from "typedi";
+import { UserAuthenticated } from "../domain/UserAuthenticated";
 import { RoleId } from "../enums/RoleId";
 import { ActiveClientCommandHandler } from '../usecase/commands/category/ActiveClientCommandHandler';
 import { ArchiveClientCommand } from '../usecase/commands/client/ArchiveClientCommand';
@@ -36,14 +37,16 @@ export class ClientController {
     ) {}
 
     @Get('/')
-    async find(@QueryParams() param: FindClientQuery) {
-        param.roleAuthId = RoleId.SUPER_ADMIN;
+    @Authorized([RoleId.SUPER_ADMIN, RoleId.MANAGER])
+    async find(@QueryParams() param: FindClientQuery, @CurrentUser() userAuth: UserAuthenticated) {
+        param.roleAuthId = userAuth.roleId;
         return await this._findClientQueryHandler.handle(param);
     }
 
     @Get('/:id([0-9a-f-]{36})')
-    async getById(@Params() param: GetClientByIdQuery) {
-        param.roleAuthId = RoleId.SUPER_ADMIN;
+    @Authorized([RoleId.SUPER_ADMIN, RoleId.MANAGER])
+    async getById(@Params() param: GetClientByIdQuery, @CurrentUser() userAuth: UserAuthenticated) {
+        param.roleAuthId = userAuth.roleId;
         return await this._getClientByIdQueryHandler.handle(param);
     }
 
@@ -63,26 +66,30 @@ export class ClientController {
     }
 
     @Post('/')
-    async create(@Body() param: CreateClientCommand) {
-        param.roleAuthId = RoleId.CLIENT;
+    @Authorized([RoleId.SUPER_ADMIN])
+    async create(@Body() param: CreateClientCommand, @CurrentUser() userAuth: UserAuthenticated) {
+        param.roleAuthId = userAuth.roleId;
         return await this._createClientCommandHandler.handle(param);
     }
 
     @Put('/:id([0-9a-f-]{36})')
+    @Authorized(RoleId.SUPER_ADMIN)
     async update(@Param('id') id: string, @Body() param: UpdateClientCommand): Promise<boolean> {
         param.id = id;
         return await this._updateClientCommandHandler.handle(param);
     }
 
     @Delete('/:id([0-9a-f-]{36})')
-    async delete(@Params() param: DeleteClientCommand) {
-        param.roleAuthId = RoleId.SUPER_ADMIN;
+    @Authorized([RoleId.SUPER_ADMIN])
+    async delete(@Params() param: DeleteClientCommand, @CurrentUser() userAuth: UserAuthenticated) {
+        param.roleAuthId = userAuth.roleId;
         return await this._deleteClientCommandHandler.handle(param);
     }
 
     @Post('/:id([0-9a-f-]{36})/archive')
-    async archive(@Params() param: ArchiveClientCommand) {
-        param.roleAuthId = RoleId.SUPER_ADMIN;
+    @Authorized([RoleId.SUPER_ADMIN])
+    async archive(@Params() param: ArchiveClientCommand, @CurrentUser() userAuth: UserAuthenticated) {
+        param.roleAuthId = userAuth.roleId;
         return await this._archiveClientCommandHandler.handle(param);
     }
 }
