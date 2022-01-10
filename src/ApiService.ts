@@ -6,7 +6,6 @@ import Container from 'typedi';
 import { API_PORT } from './configs/Configuration';
 import { ApiAuthenticator } from './controller/ApiAuthenticator';
 import { HttpServer } from './HttpServer';
-
 export class ApiService {
     setup(callback: any = null): Server {
         const authenticator = Container.get(ApiAuthenticator);
@@ -29,11 +28,17 @@ export class ApiService {
             controllers: [
                 path.join(__dirname, '/controller/*{.js,.ts}')
             ],
+            middlewares: [
+                path.join(__dirname, '/middlewares/*{.js,.ts}')
+            ],
+            interceptors: [
+                path.join(__dirname, '/interceptors/*{.js,.ts}')
+            ],
             validation: false,
             defaultErrorHandler: false,
             development: true,
             authorizationChecker: authenticator.authorizationHttpChecker,
-            currentUserChecker: authenticator.userAuthChecker
+            currentUserChecker: authenticator.userAuthChecker,
         };
 
         const httpServer = new HttpServer();

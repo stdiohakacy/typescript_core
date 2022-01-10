@@ -10,8 +10,6 @@ import { RoleId } from "../enums/RoleId";
 import { AuthRepository } from "../repositories/auth/AuthRepository";
 import { ManagerRepository } from "../repositories/manager/ManagerRepository";
 import { RoleRepository } from "../repositories/role/RoleRepository";
-import { ILogService } from "../services/logs/ILogService";
-import { LogService } from "../services/logs/LogService";
 import { IStorageService } from "../services/storage/IStoreService";
 import { StorageService } from "../services/storage/StorageService";
 import { v4 } from 'uuid'
@@ -21,7 +19,6 @@ import { GenderType } from "../enums/GenderType";
 import { Auth } from "../domain/auth/Auth";
 import { AuthType } from "../enums/AuthType";
 
-const logService: ILogService = new LogService();
 export class Initial1641200227416 implements MigrationInterface {
     name = 'Initial1641200227416'
 
@@ -78,8 +75,6 @@ export class Initial1641200227416 implements MigrationInterface {
     role.name = 'Client';
     await roleRepository.create(role, queryRunner);
 
-    logService.info('\x1b[32m Create roles successfully. \x1b[0m');
-
     // Create user "Super Admin"
 
     const manager = new Manager({ id: v4() } as IManager);
@@ -98,8 +93,6 @@ export class Initial1641200227416 implements MigrationInterface {
 
     await managerRepository.create(manager, queryRunner);
     await authRepository.create(auth, queryRunner);
-
-    logService.info('\x1b[32m Create user "Super Admin" successfully. \x1b[0m');
 }
 
 /**
@@ -144,5 +137,4 @@ async function initBucket(): Promise<void> {
     };
 
     await storageService.createBucket(JSON.stringify(policy));
-    logService.info('\x1b[32m Create bucket successfully. \x1b[0m');
 }

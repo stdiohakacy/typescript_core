@@ -1,0 +1,12 @@
+error: TypeError: Cannot read properties of undefined (reading 'roleId')
+    at ManagerController.<anonymous> (/Users/duynguyen/Desktop/123/core/typescript-core/src/controller/ManagerController.ts:40:37)
+    at step (/Users/duynguyen/Desktop/123/core/typescript-core/node_modules/tslib/tslib.js:143:27)
+    at Object.next (/Users/duynguyen/Desktop/123/core/typescript-core/node_modules/tslib/tslib.js:124:57)
+    at /Users/duynguyen/Desktop/123/core/typescript-core/node_modules/tslib/tslib.js:117:75
+    at new Promise (<anonymous>)
+    at __awaiter (/Users/duynguyen/Desktop/123/core/typescript-core/node_modules/tslib/tslib.js:113:16)
+    at ManagerController.getById (/Users/duynguyen/Desktop/123/core/typescript-core/src/controller/ManagerController.ts:43:38)
+    at ActionMetadata.callMethod (/Users/duynguyen/Desktop/123/core/typescript-core/node_modules/src/metadata/ActionMetadata.ts:252:44)
+    at /Users/duynguyen/Desktop/123/core/typescript-core/node_modules/src/RoutingControllers.ts:123:28
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+error: [2022-01-10T15:13:59.923Z]: 127.0.0.1 GET 500 246B 0B 0.042s /managers/9c310e14-6581-4c1b-be49-60f94d82f479 PostmanRuntime/7.28.4 {"req":{"headers":{"accept":"*/*","accept-encoding":"gzip, deflate, br","connection":"keep-alive","host":"localhost:3000","postman-token":"3b8eab2a-e7b1-402d-8ad2-7bd293c51d06","user-agent":"PostmanRuntime/7.28.4"},"query":{}},"responseTime":42}
