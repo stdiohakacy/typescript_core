@@ -10,6 +10,8 @@ import { SocketService } from './services/socket/SocketService';
 import './SingletonRegister';
 import { AddSocketUserCommand } from "./usecase/commands/user/AddSocketUserCommand";
 import { AddSocketUserCommandHandler } from "./usecase/commands/user/AddSocketUserCommandHandler";
+import { RemoveSocketUserCommand } from "./usecase/commands/user/RemoveSocketUserCommand";
+import { RemoveSocketUserCommandHandler } from "./usecase/commands/user/RemoveSocketUserCommandHandler";
 import { GetSingleChannelQuery } from "./usecase/queries/chat/GetSingleChannelQuery";
 import { GetSingleChannelQueryHandler } from "./usecase/queries/chat/GetSingleChannelQueryHandler";
 
@@ -30,7 +32,7 @@ const startApplication = async (): Promise<void> => {
       let socketId: string = socket.id;
       await emitAsync(socket, 'init-socket', socketId, uid => userId = uid);
 
-      // update socket id for user
+      // add socket id for user
       const addSocketUserCommandHandler = Container.get(AddSocketUserCommandHandler);
       const data = new AddSocketUserCommand();
       data.userId = userId;
@@ -51,6 +53,15 @@ const startApplication = async (): Promise<void> => {
           console.log(`error ${error.message}`);
           io.to(socketId).emit('error', { code: 500, message: error.message });
         }
+      })
+
+      socket.on('disconnect', async _reason => {
+        // remove socket id for user
+        const removeSocketUserCommandHandler = Container.get(RemoveSocketUserCommandHandler);
+        const data = new RemoveSocketUserCommand();
+        data.userId = userId;
+        data.socketId = socketId;
+        await removeSocketUserCommandHandler.handle(data);
       })
     })
   }
