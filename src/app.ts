@@ -5,8 +5,6 @@ import { ApiService } from './ApiService';
 import { ENABLE_API_SERVICE, ENABLE_SOCKET_SERVICE } from './configs/Configuration';
 import { IDbContext } from './database/IDbContext';
 import { emitAsync } from './libs/socket';
-import { ChannelRepository } from './repositories/chat/ChannelRepository';
-import { SocketService } from './services/socket/SocketService';
 import './SingletonRegister';
 import { AddSocketUserCommand } from "./usecase/commands/user/AddSocketUserCommand";
 import { AddSocketUserCommandHandler } from "./usecase/commands/user/AddSocketUserCommandHandler";
@@ -26,7 +24,6 @@ const startApplication = async (): Promise<void> => {
   if(ENABLE_SOCKET_SERVICE) {
     let userId: string = '';
     let io = socketIO(httpServer);
-    SocketService.getInstance().setChannelRepository(new ChannelRepository());
 
     io.on('connection', async (socket: socketIO.Socket) => {
       let socketId: string = socket.id;
