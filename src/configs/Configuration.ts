@@ -49,3 +49,7 @@ export const BUCKET_NAME: string = process.env.BUCKET_NAME ?? '';
 export const S3_REGION: string = process.env.S3_REGION ?? '';
 export const S3_ACCESS_KEY: string = process.env.S3_ACCESS_KEY ?? '';
 export const S3_SECRET_KEY: string = process.env.S3_SECRET_KEY ?? '';
+
+// SOCKET SERVICE
+export const ENABLE_SOCKET_SERVICE: boolean = convertStringToBoolean(process.env.ENABLE_SOCKET_SERVICE);
+export const SOCKET_PORT: number = Number(process.env.SOCKET_PORT);

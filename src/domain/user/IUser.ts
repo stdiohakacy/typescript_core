@@ -10,4 +10,5 @@ export interface IUser extends IBaseEntity {
     avatar: string | null;
     gender: GenderType | null;
     birthday: string | null;
+    socketIds: string[];
 }

@@ -96,6 +96,19 @@ export class UserBase<T extends IUser> extends BaseEntity<T> implements IUser {
         }
         this.data.birthday = val;
     }
+    
+    get socketIds(): string[] {
+        return this.data.socketIds;
+    }
+
+    set socketIds(val: string[]) {
+        if(val.length) {
+            if(!validator.isArray(val))
+                throw new SystemError(MessageError.PARAM_INVALID, 'socket ids');
+        }
+
+        this.data.socketIds = val;
+    }
 
     /* Handlers */
     static validateAvatarFile(file: Express.Multer.File): void {

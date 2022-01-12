@@ -35,6 +35,10 @@ export class UserDb extends BaseDbEntity<User> implements IUser {
     @Column('uuid', { name: 'channel_id', nullable: true })
     channelId: string | null;
 
+    // @Column({name: 'socket_id', nullable: true, default: '', type: 'text'})
+    @Column({ name: "socket_ids", type: 'simple-array', nullable: true })
+    socketIds: string[];
+
     /* Relationship */
 
     @ManyToOne(() => ChannelDb, channel => channel.users)
