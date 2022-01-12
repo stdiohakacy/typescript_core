@@ -12,7 +12,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-      const socket = io("http://localhost:3000");
+      const socket = io("http://localhost:3000", { query: "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlSWQiOiI4ZjAwZjNiMC05NzI4LTQxNzMtODYxYi1kM2U2ODk3Nzk0MzkiLCJpYXQiOjE2NDIwMDU0NTUsImV4cCI6MTY0MjA5MTg1NSwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlzcyI6Ik5vZGUgQ29yZSIsInN1YiI6ImQ5M2M4ODk0LWQ5NmItNGIyOS1iMTAyLTMyODA4MWUzMjQ2ZSJ9.jgqvuk6Ejwf6_Qbb2EDYZ_EYys57T5f914sk9QLr2yI" });
 
       socket.on('init-socket', (socketId, cbFn) => {
         cbFn('d93c8894-d96b-4b29-b102-328081e3246e')

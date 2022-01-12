@@ -6,6 +6,8 @@ import { ENABLE_API_SERVICE, ENABLE_SOCKET_SERVICE } from './configs/Configurati
 import { IDbContext } from './database/IDbContext';
 import { emitAsync } from './libs/socket';
 import './SingletonRegister';
+import { GetUserAuthByJwtQuery } from "./usecase/commands/auth/GetUserAuthByJwtQuery";
+import { GetUserAuthByJwtQueryHandler } from "./usecase/commands/auth/GetUserAuthByJwtQueryHandler";
 import { AddSocketUserCommand } from "./usecase/commands/user/AddSocketUserCommand";
 import { AddSocketUserCommandHandler } from "./usecase/commands/user/AddSocketUserCommandHandler";
 import { RemoveSocketUserCommand } from "./usecase/commands/user/RemoveSocketUserCommand";
@@ -24,6 +26,17 @@ const startApplication = async (): Promise<void> => {
   if(ENABLE_SOCKET_SERVICE) {
     let userId: string = '';
     let io = socketIO(httpServer);
+
+    io.use(async (socket: socketIO.Socket, next: (err?: any) => void) => {
+      const token = socket.handshake.query.token;
+      const getUserAuthByJwtQueryHandler = Container.get(GetUserAuthByJwtQueryHandler);
+      const data = new GetUserAuthByJwtQuery();
+      data.token = token;
+      const userAuth = await getUserAuthByJwtQueryHandler.handle(data);
+      if(!userAuth)
+        return next(new Error(`Authentication error! time =>${new Date().toLocaleString()}`))
+      return next();
+    })
 
     io.on('connection', async (socket: socketIO.Socket) => {
       let socketId: string = socket.id;
