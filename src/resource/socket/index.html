@@ -8,14 +8,24 @@
     <title>Document</title>
   </head>
   <body>
-    <button>Hit Me</button>
+    <button onclick="getSingleChannel()">Get single channel</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
       const socket = io("http://localhost:3000");
+
       socket.on('init-socket', (socketId, cbFn) => {
         cbFn('d93c8894-d96b-4b29-b102-328081e3246e')
       })
+      function getSingleChannel() {
+        const data = {
+          // fromUserId: 'd93c8894-d96b-4b29-b102-328081e3246e',
+          toUserId: 'd93c8894-d96b-4b29-b102-328081e3246e'
+        }
+        socket.emit('get-single-channel', data, channel => {
+          console.log(channel)
+        });
+      }
     </script>
   </body>
 </html>

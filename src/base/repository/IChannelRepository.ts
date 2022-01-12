@@ -3,4 +3,5 @@ import { IBaseRepository } from './IBaseRepository';
 
 export interface IChannelRepository extends IBaseRepository<Channel, string> {
     isChannelExist(name: string): Promise<boolean>;
+    getByName(name: string): Promise<Channel | undefined>
 }

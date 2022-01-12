@@ -17,4 +17,12 @@ export class ChannelRepository extends BaseRepository<Channel, ChannelDb, string
         const result = await query.getOne();
         return !!result;
     }
+
+    async getByName(name: string): Promise<Channel | undefined> {
+        const result = await this.repository.createQueryBuilder('channel')
+            .where('channel.name = :name', { name })
+            .getOne();
+
+        return result?.toEntity();
+    }
 }

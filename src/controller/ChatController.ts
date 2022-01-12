@@ -1,5 +1,6 @@
 import { Authorized, BodyParam, CurrentUser, JsonController, Post } from "routing-controllers";
 import { Service } from "typedi";
+import { Channel } from "../domain/chat/channel/Channel";
 import { UserAuthenticated } from "../domain/UserAuthenticated";
 import { CreateChannelCommand } from "../usecase/commands/chat/CreateChannelCommand";
 import { CreateChannelCommandHandler } from "../usecase/commands/chat/CreateChannelCommandHandler";
@@ -13,7 +14,7 @@ export class ChatController {
 
     @Post('/channel')
     @Authorized()
-    async create(@BodyParam('toUserId') toUserId: string, @CurrentUser() userAuth: UserAuthenticated): Promise<string> {
+    async create(@BodyParam('toUserId') toUserId: string, @CurrentUser() userAuth: UserAuthenticated): Promise<Channel> {
         const param = new CreateChannelCommand();
         param.name = [toUserId, userAuth.userId].sort().join();
         return await this._createChannelCommandHandler.handle(param);

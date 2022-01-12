@@ -10,6 +10,8 @@ import { SocketService } from './services/socket/SocketService';
 import './SingletonRegister';
 import { AddSocketUserCommand } from "./usecase/commands/user/AddSocketUserCommand";
 import { AddSocketUserCommandHandler } from "./usecase/commands/user/AddSocketUserCommandHandler";
+import { GetSingleChannelQuery } from "./usecase/queries/chat/GetSingleChannelQuery";
+import { GetSingleChannelQueryHandler } from "./usecase/queries/chat/GetSingleChannelQueryHandler";
 
 const dbContext = Container.get<IDbContext>('db.context');
 let httpServer: Server;
@@ -23,6 +25,7 @@ const startApplication = async (): Promise<void> => {
     let userId: string = '';
     let io = socketIO(httpServer);
     SocketService.getInstance().setChannelRepository(new ChannelRepository());
+
     io.on('connection', async (socket: socketIO.Socket) => {
       let socketId: string = socket.id;
       await emitAsync(socket, 'init-socket', socketId, uid => userId = uid);
@@ -33,6 +36,22 @@ const startApplication = async (): Promise<void> => {
       data.userId = userId;
       data.socketId = socketId;
       await addSocketUserCommandHandler.handle(data);
+
+      socket.on('get-single-channel', async (data: any, cbFn) => {
+        try {
+          const getSingleChannelQueryHandler = Container.get(GetSingleChannelQueryHandler);
+          const param = new GetSingleChannelQuery();
+          param.fromUserId = userId;
+          param.toUserId = data.toUserId;
+
+          const channel = await getSingleChannelQueryHandler.handle(param);
+          console.log(`Channel id is ${channel.id} - time ${new Date().toLocaleString()}`);
+          cbFn(channel);
+        } catch (error) {
+          console.log(`error ${error.message}`);
+          io.to(socketId).emit('error', { code: 500, message: error.message });
+        }
+      })
     })
   }
 }
