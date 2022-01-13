@@ -8,6 +8,8 @@ import { emitAsync } from './libs/socket';
 import './SingletonRegister';
 import { GetUserAuthByJwtQuery } from "./usecase/commands/auth/GetUserAuthByJwtQuery";
 import { GetUserAuthByJwtQueryHandler } from "./usecase/commands/auth/GetUserAuthByJwtQueryHandler";
+import { CreateMessageCommand } from "./usecase/commands/chat/CreateMessageCommand";
+import { CreateMessageCommandHandler } from "./usecase/commands/chat/CreateMessageCommandHandler";
 import { AddSocketUserCommand } from "./usecase/commands/user/AddSocketUserCommand";
 import { AddSocketUserCommandHandler } from "./usecase/commands/user/AddSocketUserCommandHandler";
 import { RemoveSocketUserCommand } from "./usecase/commands/user/RemoveSocketUserCommand";
@@ -62,6 +64,22 @@ const startApplication = async (): Promise<void> => {
         } catch (error) {
           console.log(`error ${error.message}`);
           io.to(socketId).emit('error', { code: 500, message: error.message });
+        }
+      })
+
+      socket.on('send-private-message', async(data: any, cbFn: any) => {
+        try {
+          const createMessageCommandHandler = Container.get(CreateMessageCommandHandler);
+
+          const param = new CreateMessageCommand();
+          param.userId = userId;
+          param.channelId = data.channelId;
+          param.content = data.content;
+
+          const id = await createMessageCommandHandler.handle(param);
+          cbFn(id);
+        } catch (error) {
+         console.error(`error ${error.message}`) 
         }
       })
 

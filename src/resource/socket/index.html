@@ -9,6 +9,7 @@
   </head>
   <body>
     <button onclick="getSingleChannel()">Get single channel</button>
+    <button onclick="sendPrivateMessage()">Send private message</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
@@ -26,6 +27,16 @@
           console.log(channel)
         });
       }
+
+      function sendPrivateMessage() {
+        const data = {
+          userId: "d93c8894-d96b-4b29-b102-328081e3246e",
+          channelId: "2184de8f-063a-495c-bf11-47625fe4ff09",
+          content: "test content"
+        }
+        socket.emit('send-private-message', data, id => console.log(id))
+      }
+
     </script>
   </body>
 </html>

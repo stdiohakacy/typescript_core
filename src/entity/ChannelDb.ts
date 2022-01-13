@@ -1,3 +1,5 @@
+import { IMessage } from './../domain/chat/message/IMessage';
+import { MessageDb } from './MessageDb';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { BaseDbEntity } from "../base/entity/BaseDbEntity";
 import { Channel } from "../domain/chat/channel/Channel";
@@ -27,6 +29,9 @@ export class ChannelDb extends BaseDbEntity<Channel> implements IChannel {
 
     @OneToMany(() => UserDb, users => users.channel)
     users: IUser[] | null;
+
+    @OneToMany(() => MessageDb, messages => messages.channel)
+    messages: IMessage[] | null;
 
     toEntity(): Channel {
         return new Channel(this);
